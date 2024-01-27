@@ -1,0 +1,70 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: metrics-server
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: "demo.salaues.dev"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: metrics-server
+            port:
+              name: metrics-svc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: metrics-svc
+spec:
+  type: ClusterIP
+  ports:
+    - name: metrics-svc
+      port: 80
+      targetPort: metrics-port
+  selector:
+    app: metrics-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics-server
+  labels:
+    app: metrics-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metrics-server
+  template:
+    metadata:
+      labels:
+        app: metrics-server
+    spec:
+      containers:
+      - name: server
+        image: ssalaues/metrics-server:latest
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: data
+            mountPath: /data
+        ports:
+        - name: metrics-port
+          containerPort: 12345
+      - name: generate-metrics
+        image: ssalaues/metrics-server:latest
+        imagePullPolicy: Always
+        command:
+          - sh
+          - /generate-data.sh
+        volumeMounts:
+          - name: data
+            mountPath: /data
+      volumes:
+        - name: data
+          emptyDir: {}

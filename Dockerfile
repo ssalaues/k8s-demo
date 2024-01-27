@@ -10,6 +10,8 @@ FROM alpine:latest
 
 COPY --from=BuildStage /metrics-server /metrics-server
 
+COPY ./metrics-server/generate-data.sh /generate-data.sh
+
 USER guest
 
 ENTRYPOINT ["/metrics-server"]
