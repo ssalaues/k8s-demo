@@ -25,7 +25,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: metrics-svc
+  name: metrics-server
 spec:
   type: ClusterIP
   ports:
@@ -61,6 +61,17 @@ spec:
         ports:
         - name: metrics-port
           containerPort: 12345
+        livenessProbe:
+          tcpSocket:
+            port: metrics-port
+          initialDelaySeconds: 5
+          periodSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: metrics-port
+          initialDelaySeconds: 1
+          periodSeconds: 5
       - name: generate-metrics
         image: ssalaues/metrics-server:latest
         imagePullPolicy: Always
