@@ -60,7 +60,7 @@ spec:
         image: ssalaues/metrics-server:latest
         imagePullPolicy: Always
         command:
-          - sh
+          - bash
           - /generate-data.sh
         volumeMounts:
           - name: data

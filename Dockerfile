@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY ./metrics-server/ .
 
+ENV CGO_ENABLED=0
+
 RUN go build -o /metrics-server server.go
 
 FROM alpine:latest
