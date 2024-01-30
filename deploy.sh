@@ -21,7 +21,7 @@ cat <<- EOF > service${i}.yml
         spec:
         containers:
         - name: server
-            image: test-service:${GITHUB_SHA}
+            image: test-service:${GITHUB_SHA:-latest}
             command:
             - bash
             - -exc
