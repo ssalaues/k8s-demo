@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - "main"
+    paths:
+      - '**.py'
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest\
     steps:
       - uses: actions/checkout@v4
         with:
@@ -27,6 +29,5 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.DIGITALOCEAN_K8S_CLUSTER }}
-      - run: bash ./deploy.sh
-      - run: kubectl apply -f service1.yml -f service2.yml
-      - run: kubectl rollout status deployment/metrics-server
+      - run: kubectl apply -f service1.yml
+      - run: kubectl rollout status deployment/service-1
