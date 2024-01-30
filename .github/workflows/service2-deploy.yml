@@ -1,11 +1,11 @@
-name: Build and Deploy
+name: Deploy Service 2
 
 on:
   push:
     branches:
       - "main"
     paths:
-      - '**.js'
+      - 'service2/**.js'
 
 jobs:
   build:
