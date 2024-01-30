@@ -1,11 +1,11 @@
-name: Build and Deploy
+name: Deploy Service 1
 
 on:
   push:
     branches:
       - "main"
     paths:
-      - '**.py'
+      - 'service1/**.py'
 
 jobs:
   build:
