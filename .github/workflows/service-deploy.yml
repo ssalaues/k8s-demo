@@ -17,7 +17,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: docker/setup-buildx-action@v3
-      - run: git_hash=$(git rev-parse --short $)
       - uses: docker/build-push-action@v5
         with:
           context: .
