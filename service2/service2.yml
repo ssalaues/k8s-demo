@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: service-2
+    labels:
+        app: service-2
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: service-2
+    template:
+        metadata:
+            labels:
+                app: service-2
+        spec:
+            containers:
+            - name: server
+              image: test-service:latest
+              command:
+              - bash
+              - -exc
+              - |
+                while true; do
+                echo "service-2 up"
+                sleep 1
+                done
