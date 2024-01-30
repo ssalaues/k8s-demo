@@ -2,7 +2,7 @@
 set -ex
 
 for i in 1 2; do
-cat <<- EOF > service${i}.yml
+cat <<- EOF > ./service${i}/deployment.yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
